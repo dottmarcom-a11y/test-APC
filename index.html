@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionario Orientativo: Plusdotazione e Intensità - Dott. Marco Moretti</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      background-color: #F4F1EA;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    #apc-app {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      max-width: 780px;
+      margin: 20px auto;
+      background: #FDFBF7;
+      border: 1px solid #E6E0D4;
+      border-radius: 14px;
+      padding: 28px 24px;
+      color: #2B2B2B;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+      box-sizing: border-box;
+    }
+    #apc-app * { box-sizing: border-box; }
+    .apc-header {
+      text-align: center;
+      margin-bottom: 22px;
+      border-bottom: 2px solid #E6E0D4;
+      padding-bottom: 16px;
+    }
+    .apc-header h2 { margin: 0 0 8px 0; color: #1F5C5B; font-size: 1.55rem; }
+    .apc-header p { margin: 0; font-size: 0.95rem; color: #555; line-height: 1.5; }
+    .apc-disclaimer {
+      background: #F3EFE6;
+      border-left: 4px solid #C87D32;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: #4A4A4A;
+      border-radius: 6px;
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+    /* Bivio iniziale */
+    .apc-fork-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 600px) {
+      .apc-fork-grid { grid-template-columns: 1fr; }
+      #apc-app { padding: 18px 14px; }
+    }
+    .apc-fork-card {
+      background: #FFFFFF;
+      border: 2px solid #D5CFC2;
+      border-radius: 12px;
+      padding: 22px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .apc-fork-card:hover {
+      border-color: #1F5C5B;
+      background: #F2F7F7;
+      transform: translateY(-2px);
+    }
+    .apc-fork-card h3 { margin: 0 0 8px 0; color: #1F5C5B; font-size: 1.15rem; }
+    .apc-fork-card p { margin: 0; font-size: 0.88rem; color: #555; line-height: 1.4; }
+
+    /* Sezioni e form */
+    .apc-section-title {
+      background: #1F5C5B;
+      color: #FFFFFF;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin: 24px 0 14px 0;
+    }
+    .apc-demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      background: #FFFFFF;
+      border: 1px solid #EAE4D9;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    @media (max-width: 600px) { .apc-demo-grid { grid-template-columns: 1fr; } }
+    .apc-field label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    .apc-field input, .apc-field select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #D5CFC2;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      background: #FAF8F4;
+      color: #222;
+    }
+    .apc-question {
+      background: #FFFFFF;
+      border: 1px solid #EAE4D9;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .apc-question-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin: 0 0 12px 0;
+      line-height: 1.45;
+    }
+    .apc-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 600px) { .apc-options { grid-template-columns: repeat(2, 1fr); } }
+    .apc-option-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9px 6px;
+      border: 1px solid #D5CFC2;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.84rem;
+      background: #FAF8F4;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .apc-option-label:hover { border-color: #1F5C5B; background: #EEF5F5; }
+    .apc-option-label input { display: none; }
+    .apc-option-label.selected {
+      background: #1F5C5B;
+      color: #FFFFFF;
+      border-color: #1F5C5B;
+      font-weight: 600;
+    }
+    .apc-consent-box {
+      background: #F3EFE6;
+      border: 1px solid #DCD5C7;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 22px;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+    .apc-consent-box label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .apc-consent-box input { margin-top: 3px; transform: scale(1.2); }
+    .apc-btn-submit {
+      display: block;
+      width: 100%;
+      background: #C87D32;
+      color: #FFFFFF;
+      border: none;
+      padding: 15px;
+      font-size: 1.06rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .apc-btn-submit:hover { background: #AE6823; }
+    .apc-back-link {
+      background: none;
+      border: none;
+      color: #1F5C5B;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 12px;
+      text-decoration: underline;
+    }
+    .apc-error {
+      color: #B91C1C;
+      background: #FEE2E2;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-top: 14px;
+      display: none;
+      text-align: center;
+    }
+    /* Risultato */
+    #apc-result-box {
+      display: none;
+      margin-top: 24px;
+      background: #FFFFFF;
+      border: 2px solid #1F5C5B;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .apc-result-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .badge-high { background: #FDE8E8; color: #9B1C1C; }
+    .badge-mid  { background: #FEF3C7; color: #92400E; }
+    .badge-low  { background: #DEF7EC; color: #03543F; }
+    #apc-result-box h3 { margin: 0 0 12px 0; color: #1F5C5B; font-size: 1.32rem; }
+    .apc-result-text { font-size: 0.96rem; line-height: 1.6; color: #333; margin-bottom: 18px; }
+    .apc-2e-alert {
+      display: none;
+      background: #FFF7ED;
+      border-left: 4px solid #C87D32;
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+    .apc-bars { margin: 18px 0; padding: 16px; background: #FAF8F4; border-radius: 10px; }
+    .apc-bar-row { margin-bottom: 12px; }
+    .apc-bar-row:last-child { margin-bottom: 0; }
+    .apc-bar-label { display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
+    .apc-bar-track { width: 100%; height: 10px; background: #E2DDD2; border-radius: 6px; overflow: hidden; }
+    .apc-bar-fill { height: 100%; background: #1F5C5B; border-radius: 6px; transition: width 0.6s ease; }
+    .apc-cta-box { text-align: center; margin-top: 22px; padding-top: 18px; border-top: 1px solid #EAE4D9; }
+    .apc-cta-btn {
+      display: inline-block;
+      background: #1F5C5B;
+      color: #FFFFFF !important;
+      text-decoration: none;
+      padding: 14px 26px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 6px;
+    }
+    .apc-cta-secondary {
+      display: inline-block;
+      background: #FAF8F4;
+      color: #1F5C5B !important;
+      border: 1px solid #1F5C5B;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin: 6px;
+    }
+    .apc-hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div id="apc-app">
+  <div class="apc-header">
+    <h2>Questionario Orientativo: Plusdotazione e Intensità</h2>
+    <p>Strumento gratuito e anonimo per esplorare i tratti di Alto Potenziale Cognitivo, Sovraeccitabilità e Doppia Eccezionalità.</p>
+  </div>
+
+  <div class="apc-disclaimer">
+    <strong>Nota clinica:</strong> questo questionario ha scopo puramente orientativo e non costituisce una diagnosi. Non raccoglie nomi, email né dati identificativi.
+  </div>
+
+  <!-- STEP 1: BIVIO INIZIALE -->
+  <div id="apc-step-fork">
+    <p style="text-align:center; font-weight:600; font-size:1.05rem; margin-bottom:14px;">
+      Chi sta compilando il questionario?
+    </p>
+    <div class="apc-fork-grid">
+      <div class="apc-fork-card" onclick="apcStart('genitore')">
+        <h3>👨‍👩‍👧 Genitore (per il figlio)</h3>
+        <p>Osservazione dei comportamenti e delle caratteristiche di un bambino o ragazzo in età scolare.</p>
+      </div>
+      <div class="apc-fork-card" onclick="apcStart('adulto')">
+        <h3>🧠 Adolescente / Adulto (per sé)</h3>
+        <p>Autovalutazione rivolta a ragazzi dai 14 anni in su e adulti che vogliono esplorare il proprio funzionamento.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: QUESTIONARIO DINAMICO -->
+  <div id="apc-step-form" class="apc-hidden">
+    <button type="button" class="apc-back-link" onclick="apcBackToFork()">← Cambia tipologia di questionario</button>
+
+    <form id="apc-form">
+      <div class="apc-section-title">Dati anagrafici anonimi (per fini statistici)</div>
+      <div class="apc-demo-grid">
+        <div class="apc-field">
+          <label id="lbl-eta" for="inp-eta">Età (in anni) *</label>
+          <input type="number" id="inp-eta" min="3" max="99" placeholder="Es. 9" required>
+        </div>
+        <div class="apc-field">
+          <label for="inp-sesso">Sesso *</label>
+          <select id="inp-sesso" required>
+            <option value="">Seleziona...</option>
+            <option value="M">Maschio</option>
+            <option value="F">Femmina</option>
+            <option value="NR">Preferisco non rispondere</option>
+          </select>
+        </div>
+        <div class="apc-field">
+          <label id="lbl-scolarita" for="inp-scolarita">Classe frequentata *</label>
+          <select id="inp-scolarita" required></select>
+        </div>
+        <div class="apc-field">
+          <label for="inp-diagnosi">Diagnosi o valutazioni già presenti</label>
+          <select id="inp-diagnosi">
+            <option value="Nessuna">Nessuna</option>
+            <option value="DSA">DSA (Dislessia, Disgrafia, ecc.)</option>
+            <option value="ADHD">ADHD</option>
+            <option value="Autismo">Spettro Autistico</option>
+            <option value="Plusdotazione">Plusdotazione già valutata</option>
+            <option value="Multipla_2e">Più condizioni (es. Plusdotazione + DSA/ADHD)</option>
+            <option value="Altro">Altro</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="apc-questions-mount"></div>
+
+      <div class="apc-consent-box">
+        <label>
+          <input type="checkbox" id="inp-consent" checked>
+          <span><strong>Consenso alla ricerca scientifica (facoltativo):</strong> acconsento che le mie risposte, raccolte in forma <strong>completamente anonima</strong>, vengano utilizzate a fini statistici e di ricerca scientifica dal Dott. Marco Moretti. <em>(Se togli la spunta puoi comunque calcolare il tuo risultato senza inviare alcun dato).</em></span>
+        </label>
+      </div>
+
+      <div id="apc-error-msg" class="apc-error">Per favore, compila i campi obbligatori (*) e rispondi a tutte le 16 domande.</div>
+      <button type="button" class="apc-btn-submit" id="apc-submit-btn">Calcola il profilo orientativo</button>
+    </form>
+  </div>
+
+  <!-- STEP 3: RISULTATO -->
+  <div id="apc-result-box">
+    <span id="apc-badge" class="apc-result-badge"></span>
+    <h3 id="apc-result-title"></h3>
+    <div id="apc-result-desc" class="apc-result-text"></div>
+
+    <div id="apc-2e-box" class="apc-2e-alert">
+      <strong>⚠️ Attenzione ai segnali di Doppia Eccezionalità (2e):</strong> emergono discrepanze tipiche dei profili in cui un alto potenziale cognitivo convive con fatiche attentive, esecutive o dell'apprendimento (ADHD, DSA, ecc.). In questi casi le caratteristiche tendono a "mascherarsi" a vicenda, rendendo una valutazione neuropsicologica completa particolarmente utile.
+    </div>
+
+    <div class="apc-bars">
+      <div class="apc-bar-row">
+        <div class="apc-bar-label"><span>Area Cognitiva</span><span id="pct-cog">0%</span></div>
+        <div class="apc-bar-track"><div id="bar-cog" class="apc-bar-fill" style="width:0%"></div></div>
+      </div>
+      <div class="apc-bar-row">
+        <div class="apc-bar-label"><span>Intensità Emotiva e Asincronia</span><span id="pct-emo">0%</span></div>
+        <div class="apc-bar-track"><div id="bar-emo" class="apc-bar-fill" style="width:0%"></div></div>
+      </div>
+      <div class="apc-bar-row">
+        <div class="apc-bar-label"><span>Sovraeccitabilità (Dabrowski)</span><span id="pct-oe">0%</span></div>
+        <div class="apc-bar-track"><div id="bar-oe" class="apc-bar-fill" style="width:0%"></div></div>
+      </div>
+      <div class="apc-bar-row">
+        <div class="apc-bar-label"><span>Indici di Doppia Eccezionalità (2e)</span><span id="pct-due">0%</span></div>
+        <div class="apc-bar-track"><div id="bar-due" class="apc-bar-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="apc-cta-box">
+      <p style="margin:0 0 14px 0; font-size:0.95rem; color:#444;">
+        Desideri approfondire questo profilo con una valutazione neuropsicologica completa o un colloquio orientativo?
+      </p>
+      <!-- MODIFICA QUI: URL della tua pagina contatti o WhatsApp -->
+      <a href="https://www.dottmarcomoretti.it/contatti" class="apc-cta-btn" target="_blank" rel="noopener">
+        Contattami per una valutazione o consulenza
+      </a>
+      <br>
+      <!-- MODIFICA QUI: URL del libro su Amazon -->
+      <a href="https://www.amazon.it/s?k=Tutto+troppo+forte+Marco+Moretti" class="apc-cta-secondary" target="_blank" rel="noopener">
+        Scopri il libro «Tutto troppo forte»
+      </a>
+      <br>
+      <button type="button" class="apc-back-link" style="margin-top:14px;" onclick="apcBackToFork()">Ripeti o cambia questionario</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // MODIFICA QUI: Incolla l'URL dell'App Web generato da Google Apps Script
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwsfTzsVxj0tCMuzREHeDiWAw-fgtqdQVXadVWrlUSc0kOvKfdrMIlcWaiXpsCN5ApFw/exec";
+
+  let currentMode = null;
+
+  const scaleOptions = [
+    { text: "Mai / Raramente", val: 0 },
+    { text: "A volte", val: 1 },
+    { text: "Spesso", val: 2 },
+    { text: "Quasi sempre", val: 3 }
+  ];
+
+  const scolaritaOptions = {
+    genitore: [
+      "Scuola dell'Infanzia", "1ª Primaria", "2ª Primaria", "3ª Primaria", "4ª Primaria", "5ª Primaria",
+      "1ª Secondaria I grado", "2ª Secondaria I grado", "3ª Secondaria I grado", "Secondaria II grado"
+    ],
+    adulto: [
+      "Scuola Secondaria II grado (in corso)", "Diploma di Scuola Superiore",
+      "Laurea Triennale", "Laurea Magistrale / Ciclo Unico", "Master / Dottorato / Specializzazione", "Altro"
+    ]
+  };
+
+  const itemsData = {
+    genitore: [
+      { sec: "1. Area Cognitiva e Apprendimento", area: "cog", q: "1. Pone domande complesse o esistenziali (sulla vita, la morte, l'universo, il 'perché' ultimo delle cose) insolite per la sua età." },
+      { area: "cog", q: "2. Coglie nuovi concetti al volo, fa collegamenti originali e si annoia o si oppone davanti alla ripetizione meccanica." },
+      { area: "cog", q: "3. Usa un vocabolario molto ricco e preciso, argomenta in modo articolato o coglie precocemente ironia e doppi sensi." },
+      { area: "cog", q: "4. Mostra interessi 'totalizzanti' e una memoria eccezionale per i dettagli degli argomenti che lo/la appassionano." },
+      { sec: "2. Intensità Emotiva e Asincronia", area: "emo", q: "5. C'è un forte divario tra la maturità del suo ragionamento verbale e la capacità di gestire la frustrazione o gli imprevisti." },
+      { area: "emo", q: "6. Fatica ad accettare l'errore: il perfezionismo lo/la porta a bloccarsi, arrabbiarsi o rinunciare prima di provare." },
+      { area: "emo", q: "7. Ha un senso di giustizia estremo e reagisce con forte indignazione a regole percepite come incoerenti o a torti subiti da sé o da altri." },
+      { area: "emo", q: "8. Ha crisi emotive intense (meltdown) dopo giornate ricche di stimoli o al rientro da scuola, oppure riferisce di sentirsi 'diverso/a' dai coetanei." },
+      { sec: "3. Sovraeccitabilità (Vivere 'a volume alto')", area: "oe", q: "9. (Psicomotoria) Ha un livello di energia altissimo, parla velocemente o fatica a 'spegnere il motore' la sera." },
+      { area: "oe", q: "10. (Sensoriale) È molto infastidito/a da etichette, cuciture, rumori di fondo, odori o consistenze del cibo (o prova un piacere estetico profondissimo)." },
+      { area: "oe", q: "11. (Intellettuale) La sua mente sembra non fermarsi mai: verifica la coerenza di ciò che dicono gli adulti e si immerge totalmente negli enigmi." },
+      { area: "oe", q: "12. (Immaginativa) Ha un mondo interiore vivissimo, sogna a occhi aperti o sviluppa paure intense perché immagina gli scenari in modo molto realistico." },
+      { area: "oe", q: "13. (Emotiva) Vive le emozioni agli estremi (gioia travolgente, tristezza profonda) e mostra un'empatia acutissima verso persone, animali o storie." },
+      { sec: "4. Possibili segnali di Doppia Eccezionalità (2e)", area: "due", q: "14. È brillante nell'esposizione orale, ma incontra fatiche sproporzionate nella scrittura (lentezza, grafia, errori) o nella lettura." },
+      { area: "due", q: "15. Si concentra per ore su ciò che ama (iperfocus), ma si distrae di continuo, dimentica il materiale o fatica a organizzarsi nei compiti di routine." },
+      { area: "due", q: "16. Ottiene risultati scolastici nella media, ma torna a casa esausto/a per l'enorme sforzo necessario a compensare le proprie fatiche." }
+    ],
+    adulto: [
+      { sec: "1. Area Cognitiva e Apprendimento", area: "cog", q: "1. Fin da piccolo/a mi pongo domande profonde o esistenziali e sento il bisogno di capire i meccanismi ultimi dietro le cose." },
+      { area: "cog", q: "2. Colgo rapidamente nuovi concetti, faccio collegamenti intuitivi tra ambiti diversi e tollero malissimo la routine o la ripetizione meccanica." },
+      { area: "cog", q: "3. Uso un linguaggio preciso e sfumato, colgo velocemente incongruenze logiche, ironia e sottotesti nelle conversazioni." },
+      { area: "cog", q: "4. Sviluppo interessi intensi e 'totalizzanti' in cui mi immergo a fondo, ricordando molti dettagli di ciò che mi appassiona." },
+      { sec: "2. Intensità Emotiva e Relazionale", area: "emo", q: "5. Percepisco un divario tra la mia lucidità analitica e l'intensità con cui vivo frustrazioni, critiche o imprevisti emotivi." },
+      { area: "emo", q: "6. Il perfezionismo mi porta spesso a procrastinare, bloccarmi o sentirmi costantemente inadeguato/a (sindrome dell'impostore)." },
+      { area: "emo", q: "7. Ho un senso di giustizia e coerenza molto rigido: fatico a tollerare ipocrisie, regole illogiche o dinamiche sociali superficiali." },
+      { area: "emo", q: "8. Mi sento spesso 'fuori posto' o su una lunghezza d'onda diversa dagli altri, arrivando a esaurirmi dopo contesti sociali affollati." },
+      { sec: "3. Sovraeccitabilità (Vivere 'a volume alto')", area: "oe", q: "9. (Psicomotoria) Ho un'irrequietezza fisica o mentale costante, parlo velocemente quando mi entusiasmo e fatico a 'spegnere il cervello' la sera." },
+      { area: "oe", q: "10. (Sensoriale) Sono molto sensibile a rumori di fondo, luci forti, odori, tessuti o affollamento (oppure provo un coinvolgimento estetico profondissimo)." },
+      { area: "oe", q: "11. (Intellettuale) La mia mente è in flusso continuo (overthinking): analizzo costantemente scenari, problemi e possibili soluzioni." },
+      { area: "oe", q: "12. (Immaginativa) Ho un mondo interiore molto ricco e vivido, tendo a sognare a occhi aperti o ad anticipare scenari catastrofici in modo molto realistico." },
+      { area: "oe", q: "13. (Emotiva) Vivo le emozioni in modo estremo e assorbo facilmente gli stati d'animo altrui con un'empatia molto intensa." },
+      { sec: "4. Possibili segnali di Doppia Eccezionalità (2e)", area: "due", q: "14. Ho un pensiero molto veloce e articolato, ma incontro fatiche inattese nella lettura prolungata, nella scrittura, nel calcolo o nel tradurre le idee su carta." },
+      { area: "due", q: "15. Posso restare concentrato/a per ore su ciò che mi stimola (iperfocus), ma fatico enormemente a gestire scadenze, organizzazione e compiti noiosi." },
+      { area: "due", q: "16. Raggiungo risultati buoni nello studio o nel lavoro, ma al prezzo di una stanchezza mentale sproporzionata per compensare le mie fatiche." }
+    ]
+  };
+
+  window.apcStart = function(mode) {
+    currentMode = mode;
+    document.getElementById('apc-step-fork').classList.add('apc-hidden');
+    document.getElementById('apc-step-form').classList.remove('apc-hidden');
+    document.getElementById('apc-result-box').style.display = 'none';
+
+    document.getElementById('lbl-eta').textContent = (mode === 'genitore') ? "Età del figlio/a (in anni) *" : "La tua età (in anni) *";
+    document.getElementById('inp-eta').placeholder = (mode === 'genitore') ? "Es. 9" : "Es. 28";
+    document.getElementById('lbl-scolarita').textContent = (mode === 'genitore') ? "Classe frequentata *" : "Titolo di studio / Scolarità *";
+
+    const selScol = document.getElementById('inp-scolarita');
+    selScol.innerHTML = '<option value="">Seleziona...</option>';
+    scolaritaOptions[mode].forEach(opt => {
+      selScol.innerHTML += `<option value="${opt}">${opt}</option>`;
+    });
+
+    const mount = document.getElementById('apc-questions-mount');
+    mount.innerHTML = '';
+    itemsData[mode].forEach((item, idx) => {
+      if (item.sec) {
+        mount.innerHTML += `<div class="apc-section-title">${item.sec}</div>`;
+      }
+      let optsHtml = '';
+      scaleOptions.forEach(o => {
+        optsHtml += `<label class="apc-option-label"><input type="radio" name="q${idx}" value="${o.val}"><span>${o.text}</span></label>`;
+      });
+      mount.innerHTML += `
+        <div class="apc-question" data-area="${item.area}">
+          <p class="apc-question-text">${item.q}</p>
+          <div class="apc-options">${optsHtml}</div>
+        </div>`;
+    });
+
+    mount.querySelectorAll('.apc-option-label').forEach(lbl => {
+      lbl.addEventListener('click', function() {
+        const parent = lbl.closest('.apc-options');
+        parent.querySelectorAll('.apc-option-label').forEach(l => l.classList.remove('selected'));
+        lbl.classList.add('selected');
+      });
+    });
+
+    document.getElementById('apc-app').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  window.apcBackToFork = function() {
+    document.getElementById('apc-form').reset();
+    document.getElementById('apc-step-form').classList.add('apc-hidden');
+    document.getElementById('apc-result-box').style.display = 'none';
+    document.getElementById('apc-step-fork').classList.remove('apc-hidden');
+    document.getElementById('apc-app').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  document.getElementById('apc-submit-btn').addEventListener('click', function() {
+    const eta = document.getElementById('inp-eta').value.trim();
+    const sesso = document.getElementById('inp-sesso').value;
+    const scolarita = document.getElementById('inp-scolarita').value;
+    const diagnosi = document.getElementById('inp-diagnosi').value;
+    const consent = document.getElementById('inp-consent').checked;
+
+    const questions = document.querySelectorAll('#apc-questions-mount .apc-question');
+    let scores = { cog: 0, emo: 0, oe: 0, due: 0 };
+    let maxes  = { cog: 12, emo: 12, oe: 15, due: 9 };
+    let itemValues = [];
+    let answered = 0;
+
+    questions.forEach((q, idx) => {
+      const checked = q.querySelector(`input[name="q${idx}"]:checked`);
+      if (checked) {
+        answered++;
+        const v = parseInt(checked.value, 10);
+        itemValues.push(v);
+        scores[q.dataset.area] += v;
+      }
+    });
+
+    const err = document.getElementById('apc-error-msg');
+    if (!eta || !sesso || !scolarita || answered < questions.length) {
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+
+    const pctCog = Math.round((scores.cog / maxes.cog) * 100);
+    const pctEmo = Math.round((scores.emo / maxes.emo) * 100);
+    const pctOe  = Math.round((scores.oe  / maxes.oe)  * 100);
+    const pctDue = Math.round((scores.due / maxes.due) * 100);
+
+    document.getElementById('pct-cog').textContent = pctCog + '%';
+    document.getElementById('bar-cog').style.width = pctCog + '%';
+    document.getElementById('pct-emo').textContent = pctEmo + '%';
+    document.getElementById('bar-emo').style.width = pctEmo + '%';
+    document.getElementById('pct-oe').textContent  = pctOe + '%';
+    document.getElementById('bar-oe').style.width  = pctOe + '%';
+    document.getElementById('pct-due').textContent = pctDue + '%';
+    document.getElementById('bar-due').style.width = pctDue + '%';
+
+    const badge = document.getElementById('apc-badge');
+    const title = document.getElementById('apc-result-title');
+    const desc  = document.getElementById('apc-result-desc');
+    const box2e = document.getElementById('apc-2e-box');
+
+    box2e.style.display = (scores.due >= 5) ? 'block' : 'none';
+    const totalCore = scores.cog + scores.emo + scores.oe;
+    let esitoCode = "";
+
+    if ((scores.cog >= 7 && (scores.emo >= 6 || scores.oe >= 8)) || scores.due >= 5 || totalCore >= 24) {
+      esitoCode = "Approfondimento_Consigliato";
+      badge.className = 'apc-result-badge badge-high';
+      badge.textContent = 'Approfondimento Consigliato';
+      title.textContent = 'È consigliabile una valutazione neuropsicologica completa';
+      desc.innerHTML = 'Le risposte evidenziano una combinazione significativa tra <strong>rapidità/profondità cognitiva</strong> e <strong>alta intensità emotivo-sensoriale</strong> (o segnali di possibile doppia eccezionalità). Una valutazione neuropsicologica completa permette di mappare con precisione punti di forza e fragilità, costruendo strategie concrete per il benessere quotidiano.';
+    } else if (totalCore >= 14 || scores.cog >= 7 || scores.emo >= 7 || scores.oe >= 8) {
+      esitoCode = "Profilo_Da_Monitorare";
+      badge.className = 'apc-result-badge badge-mid';
+      badge.textContent = 'Profilo da Monitorare';
+      title.textContent = 'Emergono alcuni tratti di intensità o alto potenziale';
+      desc.innerHTML = 'Sono presenti diversi indicatori interessanti, anche se non in tutte le aree contemporaneamente. Se queste caratteristiche generano fatica scolastica, lavorativa, relazionale o emotiva, un <strong>colloquio orientativo</strong> può aiutarti a capire se procedere con una valutazione strutturata.';
+    } else {
+      esitoCode = "Profilo_Non_Indicativo";
+      badge.className = 'apc-result-badge badge-low';
+      badge.textContent = 'Profilo Non Indicativo';
+      title.textContent = 'Al momento non emergono segnali marcati di plusdotazione';
+      desc.innerHTML = 'Sulla base delle risposte inserite, non si rileva al momento un quadro tipico di alto potenziale cognitivo o forte sovraeccitabilità. Resta comunque valido il principio clinico: in presenza di fatiche specifiche nell'apprendimento, nell'attenzione o nella regolazione emotiva, un confronto specialistico resta sempre utile.';
+    }
+
+    if (consent && GOOGLE_SCRIPT_URL.startsWith("https://")) {
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          versione: currentMode,
+          eta: eta,
+          sesso: sesso,
+          scolarita: scolarita,
+          diagnosi: diagnosi,
+          items: itemValues,
+          scores: scores,
+          esito: esitoCode
+        })
+      }).catch(() => {});
+    }
+
+    const resBox = document.getElementById('apc-result-box');
+    resBox.style.display = 'block';
+    resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
+
+</body>
+</html>
